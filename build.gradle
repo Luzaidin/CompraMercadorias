@@ -8,7 +8,6 @@
 
 plugins {
     // Apply the java plugin to add support for Java
-    id 'java'
     id 'war'
     id 'org.gretty' version '2.2.0'
 }
@@ -19,5 +18,10 @@ repositories {
 }
 
 dependencies {
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet:jstl:1.2'
+}
+
+gretty {
+  servletContainer = 'tomcat8'
 }
