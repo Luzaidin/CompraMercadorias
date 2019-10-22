@@ -35,27 +35,27 @@
     <form>
         <div>
             <label>Código</label>
-            <input type='number' placeholder="Código do Produto" min='0'>
+            <input type='number' placeholder="Código do Produto" min='0' name="codigo">
         </div>
         <div>
             <label>Nome</label>
-            <input type='text' placeholder="Nome da Mercadoria">
+            <input type='text' placeholder="Nome da Mercadoria" name="nome">
         </div>
         <div>
             <label>Unidade</label>
-            <input type='text' placeholder="Unidade da Mercadoria">
+            <input type='text' placeholder="Unidade da Mercadoria" name="unidade">
         </div>
         <div>
             <label>Preço R$</label>
-            <input type='number' placeholder="Preço Unitário do Produto" min='0'>
+            <input type='number' placeholder="Preço Unitário do Produto" min='0' name="preco">
         </div>
         <div>
             <label>Quantidade no Estoque</label>
-            <input type='number' placeholder="Quantidade da Mercadoria no Estoque" min='1'>
+            <input type='number' placeholder="Quantidade da Mercadoria no Estoque" min='1' name="quantidade">
         </div>
         <div>
             <label>Descrição</label>
-            <input type='text' placeholder="Descrição da Mercadoria">
+            <input type='text' placeholder="Descrição da Mercadoria" name="descricao">
         </div>
     </form>
     <div>
