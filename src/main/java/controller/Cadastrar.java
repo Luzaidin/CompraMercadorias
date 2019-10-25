@@ -11,7 +11,6 @@ public class Cadastrar extends HttpServlet{
     public void doGet(HttpServletRequest req, HttpServletResponse resp){
         
         ServletContext sc = req.getServletContext();
-        String path = req.getRequestURI();
 
         try{
             sc.getRequestDispatcher("/jsp/cadastrar.jsp").forward(req, resp);            

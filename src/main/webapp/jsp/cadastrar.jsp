@@ -1,4 +1,3 @@
-<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <head>
@@ -32,7 +31,7 @@
     </div>
 </div>
 <div>
-    <form>
+    <form action="cadastro.action" method="post">
         <div>
             <label>Código</label>
             <input type='number' placeholder="Código do Produto" min='0' name="codigo">
@@ -57,10 +56,13 @@
             <label>Descrição</label>
             <input type='text' placeholder="Descrição da Mercadoria" name="descricao">
         </div>
+        <div>
+            <input type="submit" value="Salvar" class="submitButton" >
+        </div>
+        <div>
+            <% String m = (String) request.getAttribute("mensagem"); 
+                out.print("<label> " + m + " </label>");
+            %>
+        </div>
     </form>
-    <div>
-        <button>
-            Salvar 
-        </button>
-    </div>
 </div>
