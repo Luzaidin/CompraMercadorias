@@ -10,28 +10,28 @@ import model.ProdutoDAO;
 
 public class ProdutoDAOImpl implements ProdutoDAO {
 
-    public ProdutoDAOImpl(){
-    }
+    protected EntityManager entityManager;
 
     @Override
     public boolean insert(Produto produto){
-        EntityManagerFactory emf     = Persistence.createEntityManagerFactory("compra_mercadorias");
-        EntityManager em = emf.createEntityManager();
+        entityManager = ServicoEntityManager.getEntityManager();
         if(findByCodigo(produto.getCodigo()) != null){
             return false;
         } else{
-            Query query = em.createNativeQuery("insert into produto (codigo, nome, unidade, preco, quantidade, descricao) " +
-                " values(?, ?, ?, ?, ?, ?)");
+            Query query = entityManager.createNativeQuery("insert into Produto (codigo, nome, unidade, preco, quantidade, descricao) " +
+                " values(?, ?, ?, ?, ?, ?)", Produto.class);
             query.setParameter(1, produto.getCodigo());
             query.setParameter(2, produto.getNome());
             query.setParameter(3, produto.getUnidade());
             query.setParameter(4, produto.getPreco());
             query.setParameter(5, produto.getQuantidade());
             query.setParameter(6, produto.getDescricao());
-            query.executeUpdate();
 
-            em.close();
-            emf.close(); 
+            entityManager.getTransaction().begin();
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+
+            entityManager.close();
 
             return true;
         }
@@ -39,23 +39,25 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public boolean update(Produto produto){
-        EntityManagerFactory emf     = Persistence.createEntityManagerFactory("compra_mercadorias");
-        EntityManager em = emf.createEntityManager();
+        entityManager = ServicoEntityManager.getEntityManager();
         if(findByCodigo(produto.getCodigo()) != null){
             return false;
         } else{
-            Query query = em.createNativeQuery("update produto set codigo = :codigo, nome = :nome," + 
+            Query query = entityManager.createNativeQuery("update Produto set codigo = :codigo, nome = :nome," + 
             " unidade = :unidade, preco = :preco, quantidade = :quantidade, descricao = : quantidade " +
-            " where codigo = :codigo");
+            " where codigo = :codigo", Produto.class);
             query.setParameter("codigo", produto.getCodigo());
             query.setParameter("nome", produto.getNome());
             query.setParameter("unidade", produto.getUnidade());
             query.setParameter("preco", produto.getPreco());
             query.setParameter("quantidade", produto.getQuantidade());
             query.setParameter("descricao", produto.getDescricao());
+
+            entityManager.getTransaction().begin();
             query.executeUpdate();
-            em.close();
-            emf.close(); 
+            entityManager.getTransaction().commit();
+
+            entityManager.close();
 
             return true;
         }
@@ -63,16 +65,18 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public boolean delete(Integer codigo){
-        EntityManagerFactory emf     = Persistence.createEntityManagerFactory("compra_mercadorias");
-        EntityManager em = emf.createEntityManager();
+        entityManager = ServicoEntityManager.getEntityManager();
         if(findByCodigo(codigo) == null){
             return false;
         } else{
-            Query query = em.createNativeQuery("delete from produto where codigo = :codogp");
+            Query query = entityManager.createNativeQuery("delete from Produto where codigo = :codogp", Produto.class);
             query.setParameter("codigo", codigo);
+
+            entityManager.getTransaction().begin();
             query.executeUpdate();
-            em.close();
-            emf.close(); 
+            entityManager.getTransaction().commit();
+
+            entityManager.close();
 
             return true;
         }
@@ -80,25 +84,23 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public Produto findByCodigo(Integer codigo){
-        EntityManagerFactory emf     = Persistence.createEntityManagerFactory("compra_mercadorias");
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("select p from produto p  where p.codigo = :codigo"); 
+        entityManager = ServicoEntityManager.getEntityManager();
+        Query query = entityManager.createQuery("select p from Produto p  where p.codigo = :codigo", Produto.class); 
         query.setParameter("codigo", codigo);  
         Produto produto = (Produto)query.getSingleResult();
-        em.close();
-        emf.close();  
+
+        entityManager.close();  
 
         return produto;
     }
 
     @Override
     public List<Produto> findAll(){
-        EntityManagerFactory emf     = Persistence.createEntityManagerFactory("compra_mercadorias");
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("select p from produto p "); 
+        entityManager = ServicoEntityManager.getEntityManager();
+        Query query = entityManager.createQuery("select p from Produto p ", Produto.class); 
         List<Produto> produto = query.getResultList();
-        em.close();
-        emf.close(); 
+
+        entityManager.close(); 
 
         return produto;
     }

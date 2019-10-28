@@ -52,12 +52,12 @@
 
         <%  for(Produto p : items){
             out.print("<tr>");
-                out.print("<td>" + p.codigo + "</td>");
-                out.print("<td>" + p.nome + "</td>");
-                out.print("<td>" + p.unidade + "</td>");
-                out.print("<td>" + p.preco + "</td>");
-                out.print("<td>" + p.quantidade + "</td>");
-                out.print("<td>" + p.descricao + "</td>");
+                out.print("<td>" + p.getCodigo() + "</td>");
+                out.print("<td>" + p.getNome() + "</td>");
+                out.print("<td>" + p.getUnidade() + "</td>");
+                out.print("<td>" + p.getPreco() + "</td>");
+                out.print("<td>" + p.getQuantidade() + "</td>");
+                out.print("<td>" + p.getDescricao() + "</td>");
             out.print("</tr>");
         }%>
         <!--<tr>
