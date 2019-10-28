@@ -21,23 +21,8 @@ public class Cadastro extends HttpServlet {
 
         ServletContext sc = req.getServletContext();
         ProdutoDAOImpl pd = new ProdutoDAOImpl();
-        Produto p = new Produto();
-
-        Integer codigo = 0;
-        String nome = "";
-        String unidade = "";
-        Double preco = 0.0;
-        Integer quantidade = 0;
-        String descricao = "";
-
-        if(verificarCampos(req, p, codigo, nome, unidade, preco, quantidade, descricao)){
-            p.setCodigo(codigo);
-            p.setNome(nome);
-            p.setUnidade(unidade);
-            p.setPreco(preco);
-            p.setQuantidade(quantidade);
-            p.setDescricao(descricao);
-
+        Produto p = verificarCampos(req);
+        if(p != null){
              if(!pd.insert(p)){
                 req.setAttribute("mensagem", "Erro ao inser o produto.");
             } 
@@ -50,53 +35,52 @@ public class Cadastro extends HttpServlet {
         }
     }
 
-    public boolean verificarCampos(HttpServletRequest req, Produto p, Integer codigo, String nome, String unidade, Double preco, Integer quantidade, String descricao){
+    public Produto verificarCampos(HttpServletRequest req){
         //codigo
+        Produto p = new Produto();
+
         try{
-            codigo = Integer.parseInt(req.getParameter("codigo"));
+            p.setCodigo(Integer.parseInt(req.getParameter("codigo")));
         }catch(Exception e){
             req.setAttribute("mensagem", "Erro. Insira um número inteiro para o Código.");
-            return false;
         }  
 
         //nome
-        nome = req.getParameter("nome");
-        if(nome.equals("")){
-            req.setAttribute("mensagem", "Erro. Campo vazio para Nome.");
-            return false;
-        }
+        p.setNome(req.getParameter("nome"));
+        // if(nome.equals("")){
+        //     req.setAttribute("mensagem", "Erro. Campo vazio para Nome.");
+        // }
 
         //unidade
-        unidade = req.getParameter("unidade");
-        if(unidade.equals("")){
-            req.setAttribute("mensagem", "Erro. Campo vazio para Unidade.");
-            return false;
-        }
+        p.setUnidade(req.getParameter("unidade"));
+        // if(unidade.equals("")){
+        //     req.setAttribute("mensagem", "Erro. Campo vazio para Unidade.");
+        // }
 
         //preco
         try{
-            preco = Double.parseDouble(req.getParameter("preco"));
+            p.setPreco(Double.parseDouble(req.getParameter("preco")));
         } catch(Exception e){
             req.setAttribute("mensagem", "Erro. Insira um número para o Preço.");
-            return false;
+
         }  
 
         //quantidade
         try{
-            quantidade = Integer.parseInt(req.getParameter("quantidade"));
+            p.setQuantidade(Integer.parseInt(req.getParameter("quantidade")));
         } catch(Exception e){
             req.setAttribute("mensagem", "Erro. Insira um número inteiro para a Quantidade.");
-            return false;
+
         }  
 
         //descricao
-        descricao = req.getParameter("descricao");
-        if(descricao.equals("")){
-            req.setAttribute("mensagem", "Erro. Campo vazio para Descrição.");
-            return false;
-        }
+        p.setDescricao(req.getParameter("descricao"));
+        // if(descricao.equals("")){
+        //     req.setAttribute("mensagem", "Erro. Campo vazio para Descrição.");
+
+        // }
 
         req.setAttribute("mensagem", "Sucesso ao cadastrar Produto");
-        return true;
+        return p;
     }
 }
