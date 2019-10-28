@@ -15,9 +15,9 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     @Override
     public boolean insert(Produto produto){
         entityManager = ServicoEntityManager.getEntityManager();
-        if(findByCodigo(produto.getCodigo()) != null){
-            return false;
-        } else{
+        //if(findByCodigo(produto.getCodigo()) != null){
+       //     return false;
+       // } else{
             Query query = entityManager.createNativeQuery("insert into Produto (codigo, nome, unidade, preco, quantidade, descricao) " +
                 " values(?, ?, ?, ?, ?, ?)", Produto.class);
             query.setParameter(1, produto.getCodigo());
@@ -31,10 +31,10 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             query.executeUpdate();
             entityManager.getTransaction().commit();
 
-            entityManager.close();
+            //entityManager.close();
 
             return true;
-        }
+        //}
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             query.executeUpdate();
             entityManager.getTransaction().commit();
 
-            entityManager.close();
+            //entityManager.close();
 
             return true;
         }
@@ -76,7 +76,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             query.executeUpdate();
             entityManager.getTransaction().commit();
 
-            entityManager.close();
+           // entityManager.close();
 
             return true;
         }
@@ -89,7 +89,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         query.setParameter("codigo", codigo);  
         Produto produto = (Produto)query.getSingleResult();
 
-        entityManager.close();  
+       // entityManager.close();  
 
         return produto;
     }
@@ -100,7 +100,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         Query query = entityManager.createQuery("select p from Produto p ", Produto.class); 
         List<Produto> produto = query.getResultList();
 
-        entityManager.close(); 
+        //entityManager.close(); 
 
         return produto;
     }
