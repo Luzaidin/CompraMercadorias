@@ -20,7 +20,9 @@ public class Cadastro extends HttpServlet {
         }catch(Exception e){} 
 
         ServletContext sc = req.getServletContext();
+        System.out.println("eooooo");
         ProdutoDAOImpl pd = new ProdutoDAOImpl();
+        
         Produto p = verificarCampos(req);
         if(p != null){
              if(!pd.insert(p)){
