@@ -16,8 +16,8 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     public boolean insert(Produto produto){
         entityManager = ServicoEntityManager.getEntityManager();
         //if(findByCodigo(produto.getCodigo()) != null){
-       //     return false;
-       // } else{
+          //  return false;
+        //} else{
             Query query = entityManager.createNativeQuery("insert into Produto (codigo, nome, unidade, preco, quantidade, descricao) " +
                 " values(?, ?, ?, ?, ?, ?)", Produto.class);
             query.setParameter(1, produto.getCodigo());
@@ -87,7 +87,10 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         entityManager = ServicoEntityManager.getEntityManager();
         Query query = entityManager.createQuery("select p from Produto p  where p.codigo = :codigo", Produto.class); 
         query.setParameter("codigo", codigo);  
+
+        entityManager.getTransaction().begin();
         Produto produto = (Produto)query.getSingleResult();
+        entityManager.getTransaction().commit();
 
        // entityManager.close();  
 
@@ -98,7 +101,10 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     public List<Produto> findAll(){
         entityManager = ServicoEntityManager.getEntityManager();
         Query query = entityManager.createQuery("select p from Produto p ", Produto.class); 
+
+        entityManager.getTransaction().begin();
         List<Produto> produto = query.getResultList();
+        entityManager.getTransaction().commit();
 
         //entityManager.close(); 
 
