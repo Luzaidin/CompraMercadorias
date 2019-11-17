@@ -14,12 +14,16 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public boolean insert(Produto produto){
+        //System.out.println("produto e seu codigo" + produto.getCodigo());
         entityManager = ServicoEntityManager.getEntityManager();
-        //if(findByCodigo(produto.getCodigo()) != null){
-          //  return false;
-        //} else{
+        if(findByCodigo(produto.getCodigo()) != null){
+             return false;
+        } else{
+            //System.out.println("Cadastrando.");
             Query query = entityManager.createNativeQuery("insert into Produto (codigo, nome, unidade, preco, quantidade, descricao) " +
                 " values(?, ?, ?, ?, ?, ?)", Produto.class);
+
+            entityManager.getTransaction().begin();
             query.setParameter(1, produto.getCodigo());
             query.setParameter(2, produto.getNome());
             query.setParameter(3, produto.getUnidade());
@@ -27,14 +31,16 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             query.setParameter(5, produto.getQuantidade());
             query.setParameter(6, produto.getDescricao());
 
-            entityManager.getTransaction().begin();
+
             query.executeUpdate();
+
             entityManager.getTransaction().commit();
+            
 
             //entityManager.close();
 
             return true;
-        //}
+        }
     }
 
     @Override
@@ -84,17 +90,23 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public Produto findByCodigo(Integer codigo){
-        entityManager = ServicoEntityManager.getEntityManager();
-        Query query = entityManager.createQuery("select p from Produto p  where p.codigo = :codigo", Produto.class); 
-        query.setParameter("codigo", codigo);  
+        //System.out.print("entrou no codigo " + codigo);
+        try{
+            entityManager = ServicoEntityManager.getEntityManager();
+            Query query = entityManager.createQuery("select p from Produto p  where p.codigo = :codigo", Produto.class); 
 
-        entityManager.getTransaction().begin();
-        Produto produto = (Produto)query.getSingleResult();
-        entityManager.getTransaction().commit();
+            query.setParameter("codigo", codigo);  
 
-       // entityManager.close();  
+            Produto produto = (Produto)query.getSingleResult();
 
-        return produto;
+
+            //System.out.print("vproduto e  :" + produto);
+
+            return produto;
+        } catch(Exception e){
+            System.out.print("Erro ");
+            return null;
+        }
     }
 
     @Override
@@ -105,6 +117,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         entityManager.getTransaction().begin();
         List<Produto> produto = query.getResultList();
         entityManager.getTransaction().commit();
+        System.out.println("olha a lançaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         //entityManager.close(); 
 
