@@ -12,6 +12,8 @@ public class Cadastrar extends HttpServlet{
         
         ServletContext sc = req.getServletContext();
 
+        req.setAttribute("Atualizar", 0);
+        
         try{
             sc.getRequestDispatcher("/jsp/cadastrar.jsp").forward(req, resp);            
             } catch (Exception e){}

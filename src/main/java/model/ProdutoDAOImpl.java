@@ -17,7 +17,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         //System.out.println("produto e seu codigo" + produto.getCodigo());
         entityManager = ServicoEntityManager.getEntityManager();
         if(findByCodigo(produto.getCodigo()) != null){
-             return false;
+            return false;
         } else{
             //System.out.println("Cadastrando.");
             Query query = entityManager.createNativeQuery("insert into Produto (codigo, nome, unidade, preco, quantidade, descricao) " +
@@ -72,20 +72,20 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     @Override
     public boolean delete(Integer codigo){
         entityManager = ServicoEntityManager.getEntityManager();
-        if(findByCodigo(codigo) == null){
-            return false;
-        } else{
-            Query query = entityManager.createNativeQuery("delete from Produto where codigo = :codogp", Produto.class);
-            query.setParameter("codigo", codigo);
+        //if(findByCodigo(codigo) == null){
+        //    return false;
+        //} else{
+        Query query = entityManager.createNativeQuery("delete from Produto where codigo = :codigo", Produto.class);
+        query.setParameter("codigo", codigo);
 
-            entityManager.getTransaction().begin();
-            query.executeUpdate();
-            entityManager.getTransaction().commit();
+        entityManager.getTransaction().begin();
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
 
-           // entityManager.close();
+        // entityManager.close();
 
-            return true;
-        }
+        return true;
+        //}
     }
 
     @Override
