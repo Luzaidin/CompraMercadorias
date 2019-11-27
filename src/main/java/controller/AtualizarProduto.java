@@ -1,42 +1,37 @@
-
-import model.Produto;
-import model.ProdutoDAO;
-import model.ProdutoDAOImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Produto;
+import model.ProdutoDAOImpl;
 
-@WebServlet(name = "cadastro.action", urlPatterns = "/cadastro.action")
-public class Cadastro extends HttpServlet {   
-
+@WebServlet(name = "atualizarProduto.action", urlPatterns={"/atualizarProduto.action"})
+public class AtualizarProduto extends HttpServlet{
     
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp){
-
-        try{
-            req.setCharacterEncoding("UTF-8"); 
-        }catch(Exception e){} 
-
-        ServletContext sc = req.getServletContext();
-        System.out.println("eooooo");
-        ProdutoDAOImpl pd = new ProdutoDAOImpl();
-        req.setAttribute("Atualizar", 0);
         
-        Produto p = verificarCampos(req);
-        if(p != null){
-            System.out.println("produto nao e nulo");
-             if(!pd.insert(p)){
-                req.setAttribute("mensagem", "Erro ao inser o produto.");
-            } 
-        }
+        ServletContext sc = req.getServletContext();
+        ProdutoDAOImpl pd = new ProdutoDAOImpl();
 
-        try {
-            sc.getRequestDispatcher("/jsp/cadastrar.jsp").forward(req, resp); 
-        }catch(Exception e){
-            //Tratamento de erro de IO ou de Servlet..
+        Produto p = verificarCampos(req);
+        System.out.println("atualizandooooo");
+        if(p != null){
+            System.out.println("atualizandooooooooooo 2");
+            if(!pd.update(p)){
+                req.setAttribute("mensagem", "Erro ao atualizar o produto.");
+            } else{
+                System.out.println("produto atualizado!!!");
+                req.setAttribute("Produto", p);
+                req.setAttribute("Atualizar", 1);
+            }
+        }else{
+            req.setAttribute("Atualizar", 0);
         }
+        try{
+            sc.getRequestDispatcher("/jsp/cadastrar.jsp").forward(req, resp);            
+        } catch (Exception e){}
     }
 
     public Produto verificarCampos(HttpServletRequest req){
@@ -46,6 +41,7 @@ public class Cadastro extends HttpServlet {
         try{
             p.setCodigo(Integer.parseInt(req.getParameter("codigo")));
         }catch(Exception e){
+            System.out.println("codigo e  !!!!!!!!!!");
             req.setAttribute("mensagem", "Erro. Insira um número inteiro para o Código.");
             return p = null;
         }  
@@ -90,7 +86,7 @@ public class Cadastro extends HttpServlet {
         }
 
         req.setAttribute("mensagem", "Sucesso ao cadastrar Produto");
-
+        System.out.println("produto nao deu erro ao converter");
         return p;
     }
 }

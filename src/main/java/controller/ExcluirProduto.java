@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ExcluirProduto extends HttpServlet {   
     
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp){
+    public void doGet(HttpServletRequest req, HttpServletResponse resp){
 
         try{
             req.setCharacterEncoding("UTF-8"); 

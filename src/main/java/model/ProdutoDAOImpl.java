@@ -45,13 +45,15 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public boolean update(Produto produto){
+        System.out.println("Atualizando.1");
         entityManager = ServicoEntityManager.getEntityManager();
-        if(findByCodigo(produto.getCodigo()) != null){
-            return false;
-        } else{
-            Query query = entityManager.createNativeQuery("update Produto set codigo = :codigo, nome = :nome," + 
-            " unidade = :unidade, preco = :preco, quantidade = :quantidade, descricao = : quantidade " +
-            " where codigo = :codigo", Produto.class);
+        // if(findByCodigo(produto.getCodigo()) != null){
+        //     System.out.println("Erro ao char o codigo.");
+        //     return false;
+        // } else{
+            System.out.println("Atualizandooo 2.");
+            Query query = entityManager.createNativeQuery("update Produto set codigo = :codigo, nome = :nome, unidade = :unidade, preco = :preco, quantidade = :quantidade, descricao = :descricao where codigo = :codigo", Produto.class);
+            entityManager.getTransaction().begin();
             query.setParameter("codigo", produto.getCodigo());
             query.setParameter("nome", produto.getNome());
             query.setParameter("unidade", produto.getUnidade());
@@ -59,14 +61,15 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             query.setParameter("quantidade", produto.getQuantidade());
             query.setParameter("descricao", produto.getDescricao());
 
-            entityManager.getTransaction().begin();
             query.executeUpdate();
             entityManager.getTransaction().commit();
+
+            System.out.println("Sucesso ao atualiar");
 
             //entityManager.close();
 
             return true;
-        }
+        //}
     }
 
     @Override

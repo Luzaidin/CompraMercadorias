@@ -52,7 +52,7 @@
     }
 
     if(atualizar == 1){%>
-    <form action="atualizar.action" method="post">
+    <form action="atualizarProduto.action" method="post">
     <%} else{%>
     <form action="cadastro.action" method="post">
     <%} 
