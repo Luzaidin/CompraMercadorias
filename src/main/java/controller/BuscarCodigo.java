@@ -25,6 +25,7 @@ public class BuscarCodigo extends HttpServlet {
             Integer codigo = Integer.parseInt(req.getParameter("buscaCodigo"));
             Produto produto = pd.findByCodigo(codigo);
             req.setAttribute("Produto", produto);
+            System.out.print("Produto .....  " + produto);
             System.out.print("Produto e " + produto.getNome());
             req.setAttribute("codigoProdutoExcluir", produto.getCodigo());
             req.setAttribute("mensagem", "Sucesso ao encontrar o produto!");
