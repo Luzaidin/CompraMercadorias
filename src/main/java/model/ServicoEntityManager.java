@@ -16,10 +16,12 @@ public class ServicoEntityManager {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("compra_mercadorias"); // Mudar o nome de
 																							// acordo com o
 																							// persistence
-		if (entityManager == null) {
-			entityManager = factory.createEntityManager();
-		}
+		// if (entityManager == null) {
+		// 	entityManager = factory.createEntityManager();
+		// } 
 
+		entityManager = factory.createEntityManager();
+		
 		return entityManager;
 	}
 }
