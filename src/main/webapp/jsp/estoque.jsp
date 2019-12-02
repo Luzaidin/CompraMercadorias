@@ -6,7 +6,9 @@
     <title>Belo -  Gerenciamento de Estoque</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="static/css/tabelas.css">
 </head>
+<body>
 <div>
     <div>
         <div>
@@ -19,17 +21,22 @@
     </div>
 </div>
 <div>
-    <div>
-        <div>
-        <a href='estoque'>
-            <label> Gerenciamento </label>
-        </a>
-        <a href='cadastrar'>
-            <label> Cadastrar / Atualizar </label>
-        </a>
-        <a href='relatorioestoque'>
-            <label> Relatório </label>
-        </a>
+    <div class="row">
+        <div class="col-4">
+            <a href='estoque'>
+                <label> Gerenciamento </label>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href='cadastrar'>
+                <label> Cadastrar / Atualizar </label>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href='relatorioestoque'>
+                <label> Relatório </label>
+            </a>
+        </div>
     </div>
 </div>
 <div>
@@ -43,16 +50,18 @@
 </div>
 <div>
     <table>
-        <tr>
-            <th> Código</th>
-            <th> Nome</th>
-            <th> Unidade</th>
-            <th> Preço R$</th>
-            <th> Quantidade no Estoque</th>
-            <th> Descrição</th>
-            <th> Atualizar</th>
-            <th> Excluir</th>
-        </tr>
+        <thead>
+            <tr>
+                <th> Código</th>
+                <th> Nome</th>
+                <th> Unidade</th>
+                <th> Preço R$</th>
+                <th> Quantidade no Estoque</th>
+                <th> Descrição</th>
+                <th> Atualizar</th>
+                <th> Excluir</th>
+            </tr>
+        </thead>
         <%
             Produto produto = (Produto) request.getAttribute("Produto"); 
             Integer produtoCodigo = 0;
@@ -60,7 +69,6 @@
                 produtoCodigo = produto.getCodigo();
             }
         %>
-        <!--<input name="codigoProdutoExcluir" hidden value="<%=produtoCodigo%>">-->
         <%
             if(produto != null){
                     out.print("<tr>");
@@ -70,8 +78,8 @@
                             out.print("<td>" + produto.getPreco() + "</td>");
                             out.print("<td>" + produto.getQuantidade() + "</td>");
                             out.print("<td>" + produto.getDescricao() + "</td>");
-                            out.print("<td> <button  onclick=atualizar("+produto.getCodigo()+") > Atualizar</button> </td>");
-                            out.print("<td> <button  onclick=remover("+produto.getCodigo()+") > Excluir</button></td>");
+                            out.print("<td> <button  id ='atualizarP' onclick=atualizar("+produto.getCodigo()+") > Atualizar</button> </td>");
+                            out.print("<td> <button id='excluir' onclick=remover("+produto.getCodigo()+") > Excluir</button></td>");
                     out.print("</tr>");
             }
         %>
@@ -98,3 +106,4 @@
         window.location.href = 'excluir.action?id='+ id;
     }
 </script> 
+</body>
