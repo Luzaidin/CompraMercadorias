@@ -12,6 +12,9 @@ public class RelatorioCompra extends HttpServlet{
         
         ServletContext sc = req.getServletContext();
 
+        Integer codigo = Integer.parseInt(req.getParameter("codigoCarrinho"));
+        System.out.println(codigo);
+
         try{
         sc.getRequestDispatcher("/jsp/relatorioCompra.jsp").forward(req, resp);            
         } catch (Exception e){}

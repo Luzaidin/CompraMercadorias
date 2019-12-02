@@ -29,7 +29,10 @@ public class CodigoCompra extends HttpServlet  {
             Produto produto = pd.findByCodigo(codigo);
             System.out.print("produto e : " + produto);
             pw.println("<tr>");
-                pw.println("<td>" + produto.getCodigo() + "</td>");
+                pw.println("<td> <input hidden id='codigoCarrinho' value='"+produto.getCodigo()+"'></td>");
+            pw.println("</tr>");
+            pw.println("<tr>");
+                pw.println("<td> " + produto.getCodigo() + "</td>");
                 pw.println("<td>" + produto.getNome() + "</td>");
                 pw.println("<td>" + produto.getUnidade() + "</td>");
                 pw.println("<td>" + produto.getPreco() + "</td>");
