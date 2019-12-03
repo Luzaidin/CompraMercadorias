@@ -29,14 +29,14 @@ public class CodigoCompra extends HttpServlet  {
             Produto produto = pd.findByCodigo(codigo);
             System.out.print("produto e : " + produto);
             pw.println("<tr>");
-                pw.println("<td> <input hidden id='codigoCarrinho' value='"+produto.getCodigo()+"'></td>");
+                pw.println("<td> <input hidden name='codigoCarrinho"+produto.getCodigo()+"' value='"+produto.getCodigo()+"'></td>");
             pw.println("</tr>");
             pw.println("<tr>");
                 pw.println("<td> " + produto.getCodigo() + "</td>");
                 pw.println("<td>" + produto.getNome() + "</td>");
                 pw.println("<td>" + produto.getUnidade() + "</td>");
                 pw.println("<td>" + produto.getPreco() + "</td>");
-                pw.println("<td><input type='number' placeholder='Quantidade' min='1'></td>");
+                pw.println("<td><input type='number' placeholder='Quantidade' min='1' id='quantidade"+produto.getCodigo()+"'></td>");
             pw.println("</tr>");
             } catch(Exception e ){
         }

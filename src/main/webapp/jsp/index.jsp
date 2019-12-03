@@ -12,11 +12,13 @@
         <script type="text/javascript" src="static/js/codigoJs.js"></script>
         <script>
             var listaTabela = [];
+            var listaCodigo2 = [];
 
             $(document).ready(function(){
                 $("#pesquisarCodigo").click(function(){
                     if(listaTabela.indexOf($('#codigoCompra').val()) === -1){
                         listaTabela.push($('#codigoCompra').val());
+                        listaCodigo2.push($('#codigoCompra').val());
                         $.ajax({
                             url : 'buscarCodigoCompra.action',
                             data : {
@@ -30,6 +32,31 @@
                         alert("O Produto já está no carrinho!");
                     }
                 });
+
+                $("#compraFinal").click(function(){
+                    if(listaTabela.length > 0){
+                        console.log(listaCodigo2);
+                        for(var i = 0; i < listaTabela.length; i++){
+                            listaCodigo2.push($("#quantidade"+listaTabela[i]).val());
+                            console.log(listaCodigo2);
+                        }
+                        $.ajax({
+                            url : 'relatorioCompra.action',
+                            data:{
+                                listaCodigo: JSON.stringify(listaCodigo2),
+                            },
+                            success : function(result) {
+                                $("#relatorioFinal").find('tbody').append(result);
+                            },
+                            error: function(erro){
+                                alert("Erro ao finalizar Compra!");
+                            }
+                        });
+                    } else{
+                        alert("Não Existe Produto no carrinho!");
+                    }
+                });
+
             });
         </script>
         <title>Belo -  Mercadorias</title>
@@ -56,22 +83,26 @@
             </div>
         </div>
         <div>
-            <table id='tabelaCompra'>
-                <tr>
-                    <th> Código</th>
-                    <th> Nome</th>
-                    <th> Unidade</th>
-                    <th> Preço R$</th>
-                    <th> Quantidade</th>
-                </tr>
-            </table>
+            <!--<form method="get" action='relatorioCompra.action' id="formCompra">-->
+                <table id='tabelaCompra'>
+                    <tr>
+                        <th> Código</th>
+                        <th> Nome</th>
+                        <th> Unidade</th>
+                        <th> Preço R$</th>
+                        <th> Quantidade</th>
+                    </tr>
+                </table>
+                <!--<input id="relatorioCompra" type="submit" class="submitButton" hidden>-->
+                <button  type="button" id="compraFinal"> Comprar </button>
+            <!--</form>-->
         </div>
         <div>
-            <button>
-                <a href='relatoriocompra'>
-                        <label> Finalizar Compra </label>
-                </a>
-            </button>
+            <table id="relatorioFinal">
+                <tr>
+                    <th style="display:none;">A</th>
+                </tr>
+            </table>
         </div>
     </body>
 </html>
