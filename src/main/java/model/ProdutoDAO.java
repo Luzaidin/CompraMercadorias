@@ -10,4 +10,5 @@ public interface ProdutoDAO {
     public boolean delete(Integer codigo);   
     public Produto findByCodigo(Integer codigo);
     public List<Produto> findAll();
+    public boolean comprar(Integer codigo, Integer quantidade);
 }

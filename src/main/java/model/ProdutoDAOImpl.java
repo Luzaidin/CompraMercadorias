@@ -85,6 +85,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
             entityManager.close();
 
+
             return produto;
         } catch(Exception e){
             return null;
@@ -100,5 +101,32 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         entityManager.close();
 
         return produto;
+    }
+
+    @Override
+    public boolean comprar(Integer codigo, Integer quantidade){
+        Produto p = findByCodigo(codigo);
+        if(p != null){
+            if(p.getQuantidade() >= quantidade){
+                entityManager = ServicoEntityManager.getEntityManager();
+
+                if(p.getQuantidade() - quantidade >= 0){
+                    Query query = entityManager.createQuery("select p from Produto p  where p.codigo = :codigo", Produto.class); 
+                    query.setParameter("codigo", codigo);  
+                    Produto produtoResult = (Produto)query.getSingleResult();
+
+                    entityManager.getTransaction().begin();
+                    produtoResult.setQuantidade(p.getQuantidade() - quantidade);
+                    entityManager.getTransaction().commit();
+
+                    entityManager.close();
+
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
     }
 }
