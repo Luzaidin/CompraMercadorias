@@ -62,7 +62,7 @@
             <label>Código</label>
             <%
             if(atualizar == 1){%>
-            <input type="number" placeholder="Código" min="0" name="codigo" value="<%=codigo%>">
+            <input type="number" placeholder="Código" min="0" name="codigo" value="<%=codigo%>" readonly>
             <%
             } else{%>
             <input type="number" placeholder="Código do Produto" min="0" name="codigo">
